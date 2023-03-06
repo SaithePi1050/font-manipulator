@@ -1,3 +1,9 @@
+noseX = 0;
+noseY = 0;
+difference = 0;
+RightWristX = 0;
+LeftWristX = 0;
+
 function setup() 
 {
     video = createCapture(VIDEO);
@@ -13,6 +19,10 @@ function setup()
 function draw() 
 {
     background('#00FE1A');
+    fill('white');
+    stroke('black');
+    textSize(difference);
+    text("Sai", noseX, noseY);
 }
 
 function modelLoaded() 
@@ -24,6 +34,15 @@ function gotPoses(results)
 {
     if (results.length > 0) {
         console.log(results);
+        noseX = results[0].pose.nose.x;
+        noseY = results[0].pose.nose.y;
+        console.log("noseX = " + noseX + "noseY = " + noseY);
+
+        LeftWristX = results[0].pose.leftWrist.x;
+        RightWristX = results[0].pose.rightWrist.x;
+        difference = floor(LeftWristX - RightWristX);
+
+        console.log("Difference : " + difference);
     } else 
     {
         console.log('error');
